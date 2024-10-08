@@ -4,7 +4,13 @@ source ./getChainNameFromId.bash
 
 chain=$(getChainNameFromId $1)
 outputArr='[]'
-readarray arr < $2
+
+if [ ! -f $2 ]; then
+    arr=$(echo "${@:2}")
+else
+    readarray arr < $2
+fi
+
 for i in ${arr[@]}
 do
     checksummedAddress=$(node ./index.js $i)
